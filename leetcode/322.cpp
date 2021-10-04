@@ -8,7 +8,7 @@ class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
         // 需要的数目
-        vector<int> memo(amount+1,-1);
+        vector<int> memo(amount+1,-66);
 
         return dp(coins, amount, memo);
     }
@@ -17,7 +17,7 @@ public:
         // base case
         if (amount == 0 ) return 0;
         if (amount < 0 ) return -1;
-        if (memo[amount] != -1) return memo[amount];
+        if (memo[amount] != -66) return memo[amount];
 
         // int res = Integer.MAX_VALUE;
         int res = amount+1;
@@ -60,7 +60,7 @@ int main(){
     vector<int> coins={186,419,83,408};
     // [186,419,83,408]
     // 6249
-    int amount = 827;
+    int amount = 6249;
     cout << "hello world"<< endl;
     cout << entity2.coinChange(coins, amount) << "\t" << entity.coinChange(coins, amount) << endl;
     return 0;
