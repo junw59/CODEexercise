@@ -7,7 +7,7 @@ using namespace std;
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
-        // 需要的数目
+        // 需要的数目, 初始化的数字和无法完成给出的数子应该不一样，否则会出现错误判断浪费时间
         vector<int> memo(amount+1,-66);
 
         return dp(coins, amount, memo);
@@ -22,6 +22,7 @@ public:
         // int res = Integer.MAX_VALUE;
         int res = amount+1;
         for( auto coin: coins){
+            if (amount < coin) continue;
             int subP = dp(coins, amount-coin, memo);
             if (subP == -1) continue;
 
