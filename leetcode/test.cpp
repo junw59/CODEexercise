@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <vector>
+#include <map>
 #include <string>
 #include <iostream>
 #include <algorithm>
@@ -22,4 +23,10 @@ int main(){
     cout << a.compare(b) << endl;;
     cout << (a[1] == '1') << endl;
     cout << a << plusone(a,1) << endl;
+    cout << a.substr(1,2);
+
+    // map<char, int> need, window;
+    // need['c']++;
+    // cout << need['c'] << endl;
+    // cout << need['d'] << endl;
 }
