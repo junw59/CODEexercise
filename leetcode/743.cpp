@@ -56,5 +56,9 @@ public:
 
 int main(){
     // [[2,1,1],[2,3,1],[3,4,1]],4
+    vector<vector<int>> times = {{2,1,1},{2,3,1},{3,4,1}};
+    int n = 4, k = 2;
     cout << "hello world" << endl;
+    Solution entity;
+    cout << entity.networkDelayTime(times, n, k) << endl;
 }
