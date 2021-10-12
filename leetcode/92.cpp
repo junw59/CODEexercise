@@ -51,18 +51,19 @@ public:
     }
 };
 
-// current error:
 class Solution2 {
 public:
     ListNode* reverseBetween(ListNode* head, int left, int right) {
         if ( left == right) return head;
+        ListNode* dummy = new ListNode(-1);
+        dummy->next = head;
         ListNode* pre;
         ListNode* cur;
         ListNode* nxt;
         ListNode* start;
         ListNode* end;
-        start = head; cur = head;
-        for (int i = 1; i < left - 1; i++){
+        start = dummy;
+        for (int i = 0; i < left - 1; i++){
             start = start->next;
         }
         cur = start->next;
@@ -80,7 +81,7 @@ public:
             cur = nxt;
         }
         start->next = pre;
-        return head;
+        return dummy->next;
     }
 };
 
@@ -98,12 +99,13 @@ int main(){
         cout << p->val << "\t";
         p = p->next;
     }
-    // vectolist(data, p1);
-    // ListNode* p2 = entity2.reverseBetween(p1->next, 2, 4);
-    // while (p2 != nullptr)
-    // {
-    //     cout << p2->val << "\t";
-    //     p2 = p2->next;
-    // }
+    cout << endl;
+    vectolist(data, p1);
+    ListNode* p2 = entity2.reverseBetween(p1->next, 2, 4);
+    while (p2 != nullptr)
+    {
+        cout << p2->val << "\t";
+        p2 = p2->next;
+    }
     
 }
