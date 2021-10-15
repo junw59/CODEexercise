@@ -33,3 +33,10 @@ this is a code exercise.
 
 - 贪心算法
   - 455(分发饼干)...
+
+
+## 参考书籍
+
+LeetCode 101 - A LeetCode Grinding Guide (C++ Version).pdf
+
+<https://github.com/changgyhub/leetcode_101>
