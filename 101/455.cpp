@@ -1,3 +1,13 @@
+#include <stdio.h>
+#include <vector>
+#include <map>
+#include <string>
+#include <iostream>
+#include <algorithm>
+#include <queue>
+
+using namespace std;
+
 class Solution {
 public:
     int findContentChildren(vector<int>& g, vector<int>& s) {
@@ -13,3 +23,10 @@ public:
         return c;
     }
 };
+
+int main(){
+    Solution entity;
+    vector<int> c = {1,2};
+    vector<int> ck = {1,2,3};
+    cout << entity.findContentChildren(c, ck);
+}
