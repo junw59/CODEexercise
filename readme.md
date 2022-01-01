@@ -36,6 +36,10 @@ this is a code exercise.
 
 ## 参考书籍
 
-LeetCode 101 - A LeetCode Grinding Guide (C++ Version).pdf
+- LeetCode 101 - A LeetCode Grinding Guide (C++ Version).pdf
 
 <https://github.com/changgyhub/leetcode_101>
+
+- labuladong 的算法小抄
+
+<https://labuladong.gitee.io/algo/>
