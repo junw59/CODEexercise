@@ -4,7 +4,7 @@ this is a code exercise.
 
 ## content
 
-序号是 leetcode 的题号
+序号是 `leetcode` 的题号
 
 - 动态规划：
   - 509(斐波那契数),322(零钱兑换)
@@ -43,3 +43,7 @@ this is a code exercise.
 - labuladong 的算法小抄
 
 <https://labuladong.gitee.io/algo/>
+
+## 热题 100
+
+- 哈希表：(1)
