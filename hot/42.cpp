@@ -21,7 +21,7 @@ public:
                 left ++;
             }
             else{
-                ans += left_max - height[right];
+                ans += right_max - height[right];
                 right --;
             }
         }
