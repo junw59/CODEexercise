@@ -20,7 +20,7 @@ public:
         ans.emplace_back(q.top().first);
         for (int i =k; i <n; i++){
             q.push({nums[i], i});
-            // 这里必须使用 while 而不能是 if
+            // 这里必须使用 while 而不能是 if,以排除多个数值
             while (q.top().second <= i-k){
                 q.pop();
             }
