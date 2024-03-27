@@ -24,6 +24,17 @@ void vec2list(vector<int> data, ListNode * p, ListNode * last = nullptr){
     p->next = last;
 }
 
+ListNode * vec2list(vector<int> data){
+    ListNode * p = new ListNode();
+    ListNode * dummy=p;
+    for (auto i : data){
+        ListNode * l = new ListNode (i);
+        p->next = l;
+        p = l;
+    }
+    return dummy->next;
+}
+
 void print_list(ListNode * p){
     ListNode * temp = p;
     while (temp != nullptr){
@@ -103,6 +114,7 @@ int main(){
     Solution entity;
     ListNode * list0 = new ListNode(0);
     ListNode * list1 = new ListNode(1);
+    ListNode * list2 = new ListNode(2);
 
     vec2list({1,2,3,4},list0);
     vec2list({2,4,5,9},list1);
@@ -110,5 +122,7 @@ int main(){
     print_list(list1);
     print_list(entity.addTwoNumbers2(list0,list1));
 
+    list2=vec2list({1,2,3,4,5});
+    print_list(list2);
     return 0;
 }
