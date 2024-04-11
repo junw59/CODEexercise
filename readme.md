@@ -29,20 +29,17 @@ this is a code exercise.
 - 二叉树：
   - 654(最大二叉树)...
 
-101
+## 101
 
 - 贪心算法
   - 455(分发饼干),135(分发糖果),435(无重叠区间)...
+- 搜索
+  - (126. 单词接龙 II)
 
-## 参考书籍
+> 参考书籍
 
-- LeetCode 101 - A LeetCode Grinding Guide (C++ Version).pdf
-
-<https://github.com/changgyhub/leetcode_101>
-
-- labuladong 的算法小抄
-
-<https://labuladong.gitee.io/algo/>
+- LeetCode 101 - A LeetCode Grinding Guide (C++ Version).pdf <https://github.com/changgyhub/leetcode_101>
+- labuladong 的算法小抄 <https://labuladong.gitee.io/algo/>
 
 ## 热题 100
 
