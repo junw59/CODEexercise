@@ -63,9 +63,9 @@ public:
 
 
 int main(){
+    cout << "hello world" << endl;
     Solution entity;
     vector<int> nums={2,3,5,7};
-    cout << "hello world" << endl;
     vector<vector<int>> results;
     results=entity.combinationSum2(nums,8);
     for (auto i : results){
