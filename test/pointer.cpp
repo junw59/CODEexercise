@@ -15,6 +15,7 @@ int main(){
     cout << var << endl; 
     cout << "Value of &var: "; 
     cout << &var << "\t(var的地址)" << endl; 
+    cout << * &var << "\t(var的地址)的值" << endl; 
     cout << endl; 
     cout << "Value of ptr: "; 
     cout << ptr << "\t(等于&var)" << endl; 
