@@ -15,6 +15,7 @@ public:
 
         int longestStreak = 0;
         for (auto & num: num_set){
+            // 先检查有没有上一个数，有的话就是已经遍历过的了，直接跳过
             if (!num_set.count(num-1)){
                 int current_num = num;
                 int current_streak = 1;

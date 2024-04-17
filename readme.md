@@ -39,7 +39,7 @@ this is a code exercise.
 > 参考书籍
 
 - LeetCode 101 - A LeetCode Grinding Guide (C++ Version).pdf <https://github.com/changgyhub/leetcode_101>
-- labuladong 的算法小抄 <https://labuladong.gitee.io/algo/>
+- labuladong 的算法小抄 <https://labuladong.gitee.io/algo/>, <https://labuladong.online/algo/home/>
 
 ## 热题 100
 
@@ -66,3 +66,5 @@ this is a code exercise.
 - (2924. 找到冠军 II)
 - (705. 设计哈希集合)
 - (706. 设计哈希映射)
+- (924. 尽量减少恶意软件的传播)
+- (928. 尽量减少恶意软件的传播 II)
