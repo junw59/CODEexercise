@@ -154,6 +154,37 @@ inline int operator*( const Triangular_iterator &rhs){
 }
 
 
+//// function call
+//// function object 通常是作为参数传递给泛型算法
+class LessThan{
+private:
+    int _val;
+public:
+    LessThan (int val) : _val(val){}
+    int com_val() {return _val;}
+    void com_val(int n_val) {_val=n_val;}
+
+    // 重载了括号运算符() ?
+    bool operator() (int _value) const;
+};
+
+inline bool LessThan::operator() (int _value) const{
+    return _value < _val;
+}
+
+void print_less(const vector<int> &vec, int comp, ostream &out=cout){
+    LessThan lt(comp);
+    vector<int>::const_iterator it=vec.begin();
+    vector<int>::const_iterator it_end=vec.end();
+
+    out << "less than " << comp << " are: ";
+    while((it=find_if(it,it_end,lt))!=it_end){
+        out << *it << " ";
+        ++it;
+    }
+}
+
+
 int main(){
     cout << "hello world!" << endl;
     Triangular entity(20);
@@ -173,5 +204,11 @@ int main(){
         cout << *it << ", ";
         ++it;
     }
+    cout << " iterator end\n";
+
+
+    vector<int> vec={1,3,6,10,15,21,28,36,45,55,66,78};
+    int comp=20;
+    print_less(vec,comp,cout);
 
 }
