@@ -7,7 +7,27 @@
 
 using namespace std;
 
-class Triangular_iterator;
+
+// 定义其迭代器
+class Triangular_iterator{
+private:
+    int _index;
+public:
+    // 想要的是第n个，但是在数组中的下标是n-1
+    Triangular_iterator(int index):_index(index-1){}
+    // 注意const的含义
+    bool operator==(const Triangular_iterator&) const;
+    bool operator!=(const Triangular_iterator&) const;
+    // int operator*() const;
+    // int operator*();
+    Triangular_iterator & operator++(); // prefix 前置版本
+    Triangular_iterator operator++(int); // postfix 后置版本
+    int index() const;
+
+
+    friend int operator*( const Triangular_iterator &rhs);
+
+};
 
 
 class Triangular{
@@ -28,7 +48,19 @@ public:
     void gen_elem(int pos);
     void display(ostream &out);
 
+    // friend 使得这个函数可以访问类中的元素
+    // 下面这俩只能要一个
     friend int operator*( const Triangular_iterator &rhs);
+    // friend int Triangular_iterator::operator*() const;
+
+    // 只有先行定义了 Triangular_iterator 才能继续使用
+    typedef Triangular_iterator iterator;
+    Triangular_iterator begin() const{
+        return Triangular_iterator(_beg_pos);
+    }
+    Triangular_iterator end() const{
+        return Triangular_iterator(_beg_pos+_length);
+    }
 };
 
 // 静态成员需要在程序代码中提供
@@ -77,26 +109,9 @@ void Triangular::display(ostream &out){
 }
 
 
-// 定义其迭代器
-class Triangular_iterator{
-private:
-    int _index;
-public:
-    // 想要的是第n个，但是在数组中的下标是n-1
-    Triangular_iterator(int index):_index(index-1){}
-    // 注意const的含义
-    bool operator==(const Triangular_iterator&) const;
-    bool operator!=(const Triangular_iterator&) const;
-    int operator*() const;
-    int operator*();
-    Triangular_iterator & operator++(); // prefix 前置版本
-    Triangular_iterator operator++(int); // postfix 后置版本
-    int index() const;
 
 
-    friend int operator*( const Triangular_iterator &rhs);
 
-};
 
 inline int Triangular_iterator::index() const{
     return _index;
@@ -118,7 +133,7 @@ inline  Triangular_iterator& Triangular_iterator::operator++(){
 
 
 inline  Triangular_iterator Triangular_iterator::operator++(int){
-    // 后置的++，返回的是原来的指针
+    // 后置的++，返回的是原来的指针,所以需要一个中间变量
     Triangular_iterator temp = *this;
     ++_index;
     return temp;
@@ -126,19 +141,22 @@ inline  Triangular_iterator Triangular_iterator::operator++(int){
 
 
 
-// 成员函数的形式
-inline int Triangular_iterator::operator*() const{
-    return Triangular::_elems[_index];
-}
+// // 成员函数的形式
+// inline int Triangular_iterator::operator*() const{
+//     // return _index;
+//     return Triangular::_elems[_index];
+// }
+
 // 非成员函数的形式
 inline int operator*( const Triangular_iterator &rhs){
+    // return rhs.index();
     return Triangular::_elems[rhs.index()];
 }
 
 
 int main(){
     cout << "hello world!" << endl;
-    Triangular entity(10);
+    Triangular entity(20);
     entity.display(cout);
     cout<< entity.elem(9) <<endl;
 
@@ -146,6 +164,14 @@ int main(){
     cout<< Triangular::get_elem(3) <<endl;
     cout<< Triangular::_elems[0] << endl;
 
-    // Triangular::iterator it = entity.begin();
+    Triangular::iterator it = entity.begin();
+    Triangular::iterator end_it = entity.end();
+    cout << it.index() << endl;
+    // cout << *it << endl;
+    while(it!=end_it){
+        // cout << it.index() << " ";
+        cout << *it << ", ";
+        ++it;
+    }
 
 }
