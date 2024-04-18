@@ -185,6 +185,58 @@ void print_less(const vector<int> &vec, int comp, ostream &out=cout){
 }
 
 
+
+class num_sequence{
+public:
+    typedef void (num_sequence:: *PtrType) (int);
+
+    void fibonacci (int);
+    void triangular (int);
+    int elem(int);
+
+private:
+    PtrType _pmf;
+    vector<int> * _elem;
+    static const int num_seq=7;
+    static vector<vector<int>> seq;
+    static PtrType func_tbl[num_seq];
+};
+
+
+void num_sequence::fibonacci (int pos){
+    static vector <int> nums;
+    for(int n =nums.size(); n<pos; ++n){
+        if (n<2){
+            nums.push_back(1);
+        }else {
+            nums.push_back(nums[n-2]+nums[n-1]);
+        }
+    }
+}
+
+void num_sequence::triangular (int pos){
+    static vector <int> nums;
+    for(int n =nums.size(); n<pos; ++n){
+        nums.push_back( (n+1)*(n+2)/2);
+    }
+}
+
+const int num_sequence::num_seq;
+vector<vector<int>> num_sequence::seq (num_seq);
+num_sequence::PtrType num_sequence::func_tbl[num_seq]={
+    0,
+    & num_sequence::fibonacci,
+    & num_sequence::triangular
+};
+
+int num_sequence::elem(int pos){
+    if(pos > _elem->size()){
+        (this->*_pmf)(pos);
+    }
+    return (*_elem)[pos-1];
+}
+
+
 int main(){
     cout << "hello world!" << endl;
     Triangular entity(20);
@@ -210,5 +262,8 @@ int main(){
     vector<int> vec={1,3,6,10,15,21,28,36,45,55,66,78};
     int comp=20;
     print_less(vec,comp,cout);
+
+
+    // PtrType pm;
 
 }
