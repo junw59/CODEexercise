@@ -14,7 +14,7 @@ using namespace std;
 
 class Solution {
 public:
-    int minMalwareSpread(vector<vector<int>>& graph, vector<int>& initial) {
+    static int minMalwareSpread(vector<vector<int>>& graph, vector<int>& initial) {
         // 先标记相同的连通集合
         int n =graph.size();
         vector<int> id_link(n,0);
@@ -128,6 +128,7 @@ int main(){
     // vector<int> initial = {1,3};
 
     cout << entity.minMalwareSpread(nums, initial);
+    cout << Solution::minMalwareSpread(nums, initial);
     cout << entity.minMalwareSpread2(nums, initial);
 
 
