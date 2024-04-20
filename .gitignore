@@ -1,4 +1,7 @@
 .vscode/*
+windows/*
+*.zip
+
 *.exe
 *.o
 

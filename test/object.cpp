@@ -111,7 +111,7 @@ void Triangular::display(ostream &out){
 
 
 
-
+// 定义迭代对象
 
 inline int Triangular_iterator::index() const{
     return _index;
@@ -188,39 +188,80 @@ void print_less(const vector<int> &vec, int comp, ostream &out=cout){
 
 class num_sequence{
 public:
+    // 重新命名的函数指针变量
     typedef void (num_sequence:: *PtrType) (int);
+    // 枚举类型 enum
+    enum ns_type{
+        ns_unset, ns_fibonacci, ns_triangular
+    };
+    // 函数检查数值是否是合理数列序号
+    static ns_type nstype(int num){
+        // cout << static_cast <ns_type > (num) << endl;
+        return num <= 0 || num>=num_seq? ns_unset : static_cast <ns_type > (num);
+    }
 
     void fibonacci (int);
     void triangular (int);
     int elem(int);
 
+    num_sequence(){}
+    ~num_sequence(){}
+    int num_of_seq(){return num_seq;}
+    void set_sequence(ns_type nst){
+        switch (nst){
+        default:
+            cout << "invalid type setting to 0\n";
+            // break;
+        case ns_unset:
+            _pmf=0;
+            _elem=0;
+            _isa = ns_unset;
+            break;
+        case ns_fibonacci:
+        case ns_triangular:
+            _pmf=func_tbl[nst];
+            _elem= &seq[nst];
+            _isa = nst;
+            break;
+        }
+    }
+
+    const string what_am_i() const {
+        static vector<string> names ={
+            "not Set", "fibonacci", "triangular"
+        };
+        return names[_isa];
+    }
+
 private:
     PtrType _pmf;
     vector<int> * _elem;
-    static const int num_seq=7;
+    ns_type _isa;
+    static const int num_seq=3;
     static vector<vector<int>> seq;
     static PtrType func_tbl[num_seq];
 };
 
 
 void num_sequence::fibonacci (int pos){
-    static vector <int> nums;
-    for(int n =nums.size(); n<pos; ++n){
+    int size = seq[_isa].size();
+    for(int n = size; n<pos; ++n){
         if (n<2){
-            nums.push_back(1);
+            seq[_isa].push_back(1);
         }else {
-            nums.push_back(nums[n-2]+nums[n-1]);
+            seq[_isa].push_back(seq[_isa][n-2]+seq[_isa][n-1]);
         }
     }
 }
 
 void num_sequence::triangular (int pos){
-    static vector <int> nums;
-    for(int n =nums.size(); n<pos; ++n){
-        nums.push_back( (n+1)*(n+2)/2);
+    int size = seq[_isa].size();
+    for(int n =size; n<pos; ++n){
+        seq[_isa].push_back( (n+1)*(n+2)/2);
     }
 }
 
+// 静态的局部成员变量，需要在函数外声明，
 const int num_sequence::num_seq;
 vector<vector<int>> num_sequence::seq (num_seq);
 num_sequence::PtrType num_sequence::func_tbl[num_seq]={
@@ -229,11 +270,19 @@ num_sequence::PtrType num_sequence::func_tbl[num_seq]={
     & num_sequence::triangular
 };
 
-int num_sequence::elem(int pos){
+int num_sequence::elem(int pos) {
     if(pos > _elem->size()){
         (this->*_pmf)(pos);
     }
     return (*_elem)[pos-1];
+}
+
+inline void display(ostream &out, num_sequence &ns, int pos){
+    out << "The element at position "
+        << pos << " for the " 
+        << ns.what_am_i() << " seq is "
+        << ns.elem(pos) << endl;
+    return ;
 }
 
 
@@ -241,29 +290,37 @@ int main(){
     cout << "hello world!" << endl;
     Triangular entity(20);
     entity.display(cout);
-    cout<< entity.elem(9) <<endl;
+    // cout<< entity.elem(9) <<endl;
 
-    // 对于静态成员函数，可以这样用：
-    cout<< Triangular::get_elem(3) <<endl;
-    cout<< Triangular::_elems[0] << endl;
+    // // 对于静态成员函数，可以这样用：
+    // cout<< Triangular::get_elem(3) <<endl;
+    // cout<< Triangular::_elems[0] << endl;
 
-    Triangular::iterator it = entity.begin();
-    Triangular::iterator end_it = entity.end();
-    cout << it.index() << endl;
-    // cout << *it << endl;
-    while(it!=end_it){
-        // cout << it.index() << " ";
-        cout << *it << ", ";
-        ++it;
-    }
-    cout << " iterator end\n";
+    // Triangular::iterator it = entity.begin();
+    // Triangular::iterator end_it = entity.end();
+    // cout << it.index() << endl;
+    // while(it!=end_it){
+    //     // cout << it.index() << " ";
+    //     cout << *it << ", ";
+    //     ++it;
+    // }
+    // cout << " iterator end\n";
 
 
-    vector<int> vec={1,3,6,10,15,21,28,36,45,55,66,78};
-    int comp=20;
-    print_less(vec,comp,cout);
+    // vector<int> vec={1,3,6,10,15,21,28,36,45,55,66,78};
+    // int comp=20;
+    // print_less(vec,comp,cout);
 
 
     // PtrType pm;
+
+    num_sequence ns;
+    const int pos=8;
+    for(int ix=1; ix<ns.num_of_seq(); ++ix){
+        ns.set_sequence( num_sequence:: nstype(ix) );
+        int elem_val = ns.elem(pos);
+        cout << elem_val << endl;
+        display(cout, ns, pos);
+    }
 
 }
