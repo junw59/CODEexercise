@@ -97,8 +97,99 @@ void print_class(LibMat object, const LibMat *pointer, const LibMat &reference){
 }
 
 
+// 基类
+class num_sequence {
+public:
+    num_sequence();
+    virtual ~num_sequence();
 
+    // 纯虚函数
+    virtual int elem(int pos) const =0;
+    virtual const char * what_am_i() const =0;
+    virtual ostream & print_ob(ostream & out = cout) const =0;
+    static int max_elems(){return _max_elem;}
+protected:
+    virtual void gen_elems(int pos) const =0;
+    bool check_integrity(int pos, int size) const;
+    const static int _max_elem=1024;
+};
 
+num_sequence::num_sequence() {}
+
+inline num_sequence::~num_sequence() {}
+
+bool num_sequence::check_integrity(int pos, int size) const {
+    if(pos <=0 || pos > _max_elem){
+        cerr << "!! invalid position: " << pos << endl;
+        return false;
+    }
+    if (pos>size){
+        gen_elems(pos);
+    }
+
+    return true;
+}
+
+ostream & operator << (ostream & out, const num_sequence & ns){
+    return ns.print_ob( out );
+}
+
+class Fibonacci :public num_sequence {
+public:
+    Fibonacci(int len = 1, int beg_pos = 1);
+    ~Fibonacci();
+
+    virtual int elem(int pos) const ;
+    virtual const char * what_am_i() const {return "Fibonacci";}
+    virtual ostream & print_ob(ostream & out = cout) const ;
+protected:
+    virtual void gen_elems(int pos) const;
+    int _length;
+    int _beg_pos;
+    static vector<int> _elems;
+};
+
+vector<int> Fibonacci::_elems;
+
+Fibonacci::Fibonacci(int len, int beg_pos) : _length(len), _beg_pos(beg_pos) {}
+
+Fibonacci::~Fibonacci() {}
+
+int Fibonacci::elem(int pos) const {
+    if (!check_integrity(pos,_elems.size())) {
+        return 0;
+    }
+
+    // if (pos > _elems.size()) {
+    //     Fibonacci::gen_elems(pos);
+    // }
+    return _elems[pos - 1];
+}
+
+void Fibonacci::gen_elems(int pos) const {
+    if (_elems.empty()) {
+        _elems.push_back(1);
+        _elems.push_back(1);
+    }
+    if (_elems.size() <= pos) {
+        for (int ix = _elems.size(); ix <= pos; ++ix) {
+            _elems.push_back(_elems[ix - 1] + _elems[ix - 2]);
+        }
+    }
+}
+
+ostream &Fibonacci::print_ob(ostream &out) const {
+    int out_pos = _beg_pos - 1;
+    int end_pos = out_pos + _length;
+    if (end_pos > _elems.size()) {
+        Fibonacci::gen_elems(end_pos);
+    }
+    out << " ( " << _beg_pos << " , " << _length <<" ) " ;
+    while (out_pos < end_pos) {
+        out << _elems[out_pos++] << " ";
+    }
+    return out;
+}
 
 int main() {
     cout << "hello world!" << endl;
@@ -115,4 +206,12 @@ int main() {
     // cout << "print class with sliced off :\n\n";
     // print_class(ab, &ab, ab);
     // cout << "  " << typeid(ab).name() << endl;;
+
+
+    Fibonacci fib;
+    cout << "fib at 1 for :" << fib <<endl;
+    // fib.print_ob(cout);
+
+    Fibonacci fib2(10,8);
+    fib2.print_ob(cout);
 }
