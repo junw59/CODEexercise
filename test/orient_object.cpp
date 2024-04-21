@@ -96,25 +96,39 @@ void print_class(LibMat object, const LibMat *pointer, const LibMat &reference){
     return ;
 }
 
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
 // 基类
 class num_sequence {
 public:
-    num_sequence();
+    // num_sequence();
+    num_sequence(int len, int beg_pos, vector<int> & re) : _length(len), _beg_pos(beg_pos), _relems(re)  {}
     virtual ~num_sequence();
 
+
     // 纯虚函数
-    virtual int elem(int pos) const =0;
+    virtual int elem(int pos) const;
     virtual const char * what_am_i() const =0;
-    virtual ostream & print_ob(ostream & out = cout) const =0;
+    virtual ostream & print_ob(ostream & out = cout) const ;
     static int max_elems(){return _max_elem;}
+    int length() const { return _length;}
+    int beg_pos() const { return _beg_pos;}
 protected:
     virtual void gen_elems(int pos) const =0;
     bool check_integrity(int pos, int size) const;
     const static int _max_elem=1024;
+
+    int _length;
+    int _beg_pos;
+    // 这是一个应用，需要提供初始值
+    vector<int> & _relems;
 };
 
-num_sequence::num_sequence() {}
+// num_sequence::num_sequence() {}
 
 inline num_sequence::~num_sequence() {}
 
@@ -130,37 +144,63 @@ bool num_sequence::check_integrity(int pos, int size) const {
     return true;
 }
 
+
+int num_sequence::elem(int pos) const {
+    if (!check_integrity(pos,_relems.size())) {
+        return 0;
+    }
+    return _relems[pos - 1];
+}
+
+
+ostream &num_sequence::print_ob(ostream &out) const {
+    int out_pos = _beg_pos - 1;
+    int end_pos = out_pos + _length;
+    if (!check_integrity(_beg_pos,_relems.size()) || !check_integrity(end_pos,_relems.size())) {
+        return out;
+    }
+    out << this->what_am_i() << ": ( " << _beg_pos << " , " << _length <<" ) " ;
+    while (out_pos < end_pos) {
+        out << _relems[out_pos++] << " ";
+    }
+    out << endl;
+    return out;
+}
+
+
 ostream & operator << (ostream & out, const num_sequence & ns){
     return ns.print_ob( out );
 }
+
 
 class Fibonacci :public num_sequence {
 public:
     Fibonacci(int len = 1, int beg_pos = 1);
     ~Fibonacci();
 
-    virtual int elem(int pos) const ;
+    // virtual int elem(int pos) const ;
     virtual const char * what_am_i() const {return "Fibonacci";}
-    virtual ostream & print_ob(ostream & out = cout) const ;
+    // virtual ostream & print_ob(ostream & out = cout) const ;
 protected:
     virtual void gen_elems(int pos) const;
-    int _length;
-    int _beg_pos;
+    // int _length;
+    // int _beg_pos;
     static vector<int> _elems;
 };
 
 vector<int> Fibonacci::_elems;
 
-Fibonacci::Fibonacci(int len, int beg_pos) : _length(len), _beg_pos(beg_pos) {}
+// Fibonacci::Fibonacci(int len, int beg_pos) : _length(len), _beg_pos(beg_pos) {}
+Fibonacci::Fibonacci(int len, int beg_pos) : num_sequence(len, beg_pos, _elems) {}
 
 Fibonacci::~Fibonacci() {}
 
-int Fibonacci::elem(int pos) const {
-    if (!check_integrity(pos,_elems.size())) {
-        return 0;
-    }
-    return _elems[pos - 1];
-}
+// int Fibonacci::elem(int pos) const {
+//     if (!check_integrity(pos,_elems.size())) {
+//         return 0;
+//     }
+//     return _elems[pos - 1];
+// }
 
 void Fibonacci::gen_elems(int pos) const {
     if (_elems.empty()) {
@@ -174,47 +214,49 @@ void Fibonacci::gen_elems(int pos) const {
     }
 }
 
-ostream &Fibonacci::print_ob(ostream &out) const {
-    int out_pos = _beg_pos - 1;
-    int end_pos = out_pos + _length;
-    if (!check_integrity(_beg_pos,_elems.size()) || !check_integrity(end_pos,_elems.size())) {
-        return out;
-    }
-    out << " ( " << _beg_pos << " , " << _length <<" ) " ;
-    while (out_pos < end_pos) {
-        out << _elems[out_pos++] << " ";
-    }
-    return out;
-}
+// ostream &Fibonacci::print_ob(ostream &out) const {
+//     int out_pos = _beg_pos - 1;
+//     int end_pos = out_pos + _length;
+//     if (!check_integrity(_beg_pos,_elems.size()) || !check_integrity(end_pos,_elems.size())) {
+//         return out;
+//     }
+//     out << " ( " << _beg_pos << " , " << _length <<" ) " ;
+//     while (out_pos < end_pos) {
+//         out << _elems[out_pos++] << " ";
+//     }
+//     return out;
+// }
 
 
+// 另一个派生类
 class Triangular :public num_sequence {
 public:
     Triangular(int len = 1, int beg_pos = 1);
     ~Triangular();
 
-    virtual int elem(int pos) const ;
+    // virtual int elem(int pos) const ;
     virtual const char * what_am_i() const {return "Triangular";}
-    virtual ostream & print_ob(ostream & out = cout) const ;
+    // virtual ostream & print_ob(ostream & out = cout) const ;
 protected:
     virtual void gen_elems(int pos) const;
-    int _length;
-    int _beg_pos;
+    // int _length;
+    // int _beg_pos;
     static vector<int> _elems;
 };
 
 vector<int> Triangular::_elems;
 
-Triangular::Triangular(int len, int beg_pos) : _length(len), _beg_pos(beg_pos) {}
+// Triangular::Triangular(int len, int beg_pos) : _length(len), _beg_pos(beg_pos) {}
+Triangular::Triangular(int len, int beg_pos) : num_sequence(len, beg_pos, _elems) {}
 
 Triangular::~Triangular() {}
 
-int Triangular::elem(int pos) const {
-    if (!check_integrity(pos,_elems.size())) {
-        return 0;
-    }
-    return _elems[pos - 1];
-}
+// int Triangular::elem(int pos) const {
+//     if (!check_integrity(pos,_elems.size())) {
+//         return 0;
+//     }
+//     return _elems[pos - 1];
+// }
 
 void Triangular::gen_elems(int pos) const {
     if (_elems.size() <= pos) {
@@ -224,19 +266,25 @@ void Triangular::gen_elems(int pos) const {
     }
 }
 
-ostream &Triangular::print_ob(ostream &out) const {
-    int out_pos = _beg_pos - 1;
-    int end_pos = out_pos + _length;
-    if (!check_integrity(_beg_pos,_elems.size()) || !check_integrity(end_pos,_elems.size())) {
-        return out;
-    }
-    out << " ( " << _beg_pos << " , " << _length <<" ) " ;
-    while (out_pos < end_pos) {
-        out << _elems[out_pos++] << " ";
-    }
-    return out;
-}
+// ostream &Triangular::print_ob(ostream &out) const {
+//     int out_pos = _beg_pos - 1;
+//     int end_pos = out_pos + _length;
+//     if (!check_integrity(_beg_pos,_elems.size()) || !check_integrity(end_pos,_elems.size())) {
+//         return out;
+//     }
+//     out << " ( " << _beg_pos << " , " << _length <<" ) " ;
+//     while (out_pos < end_pos) {
+//         out << _elems[out_pos++] << " ";
+//     }
+//     return out;
+// }
 
+
+void print_seq(const num_sequence *ob2, const num_sequence &ob3){
+    ob2->print_ob();
+    ob3.print_ob();
+    return ;
+}
 
 
 
@@ -268,4 +316,7 @@ int main() {
 
     Triangular tri2(5,1);
     cout << "tri at 1 for :" << tri2 <<endl;
+
+
+    print_seq(&fib2,tri2);
 }
