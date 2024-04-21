@@ -217,6 +217,7 @@ public:
             _elem=0;
             _isa = ns_unset;
             break;
+        // case 应该这样使用
         case ns_fibonacci:
         case ns_triangular:
             _pmf=func_tbl[nst];

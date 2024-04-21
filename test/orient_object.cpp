@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <vector>
 #include <string>
+#include <typeinfo>
 
 using namespace std;
 
@@ -88,6 +89,16 @@ AudioBook::~AudioBook() {
 }
 
 
+void print_class(LibMat object, const LibMat *pointer, const LibMat &reference){
+    object.print_object();
+    pointer->print_object();
+    reference.print_object();
+    return ;
+}
+
+
+
+
 
 int main() {
     cout << "hello world!" << endl;
@@ -95,6 +106,13 @@ int main() {
     // print_object(lib);
     // Book book("The Books", "Authors");
     // print_object(book);
-    AudioBook ab("The AudioBook", "Authors", "Narrator");
-    print_object(ab);
+    // AudioBook ab("The AudioBook", "Authors", "Narrator");
+    // print_object(ab);
+
+    // cout << "print class :\n\n";
+    // print_class(lib, &book, ab);
+
+    // cout << "print class with sliced off :\n\n";
+    // print_class(ab, &ab, ab);
+    // cout << "  " << typeid(ab).name() << endl;;
 }
