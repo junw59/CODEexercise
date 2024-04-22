@@ -111,9 +111,9 @@ public:
 
 
     // 纯虚函数
-    virtual int elem(int pos) const;
+    int elem(int pos) const;
     virtual const char * what_am_i() const =0;
-    virtual ostream & print_ob(ostream & out = cout) const ;
+    ostream & print_ob(ostream & out = cout) const ;
     static int max_elems(){return _max_elem;}
     int length() const { return _length;}
     int beg_pos() const { return _beg_pos;}
