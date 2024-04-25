@@ -1,6 +1,10 @@
 #include <iostream>
 #include <functional>
 #include <algorithm>
+#include <iomanip>
+#include <math.h>
+#include <vector>
+#include <string>
 
 using namespace std;
 
@@ -91,6 +95,21 @@ private:
     Hello *c;
 };
 
+
+
+
+void func_p(const int &a){
+    cout << "const int &a:" << a << endl;
+}
+
+
+void func_p2(int &&a){
+    cout << "int &&a:" << a << endl;
+}
+
+
+
+////////////////////////////
 int main() {
     {
         C c{};
@@ -171,6 +190,41 @@ int main() {
         func13();
         auto func14=BindChello(&Hello::hello,&h);
         func14(102);
+    }
+
+    {
+        double a=12.345;
+        // cout << a << " " << setprecision(2) << a << endl;
+        cout << floor(a*100) << endl;
+        cout << round(a*100) << endl;
+        ++a =100;
+        // a++ =100;
+        cout << a << endl;
+    }
+
+    {
+        int a=1;
+        func_p(a);
+        func_p(3);
+        func_p2(5);
+    }
+
+    {
+        // names.size()是无符号整型，减去一个数，如果得到的是负数将会溢出
+        vector<string> names ={"sas"};
+        int n=names.size();
+        int i= (n-8>0)? n-8 : 0 ;
+        cout << ((n-8)>0) << endl;
+        cout << n << i << endl;
+
+        i= ((int) names.size()-8>0)? (int) names.size()-8 : 0 ;
+        cout << (((int) names.size()-8)>0) << endl;
+        cout << (int) names.size() << i << endl;
+
+        i= ( names.size()-8>0)?  names.size()-8 : 0 ;
+        cout << (( names.size()-8)>0) << endl;
+        cout <<  names.size() << i << endl;
+
     }
 }
 
