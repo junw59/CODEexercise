@@ -79,3 +79,5 @@ this is a code exercise.
   - 空瓶换酒：a个空瓶换b瓶酒，有n个空瓶。可以借空瓶：$\lfloor\frac{n}{a-b}\rfloor\times b$;不可以借空瓶：$\lfloor\frac{n-b}{a-b}\rfloor\times b$
 - (1146. 快照数组)
 - (2462. 雇佣 K 位工人的总代价)
+- (741. 摘樱桃)
+- (1463. 摘樱桃 II)
